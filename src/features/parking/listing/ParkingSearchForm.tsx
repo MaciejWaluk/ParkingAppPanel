@@ -148,6 +148,32 @@ export const ParkingSearchForm = ({ unitOfTime }: ParkingSearchFormProps) => {
   }
 
   const inputType = unitOfTime === 'hourly' ? 'datetime-local' : unitOfTime === 'daily' ? 'date' : 'month'
+  const minDateValue = () => {
+    const now = new Date()
+    switch (unitOfTime) {
+      case 'hourly': {
+        const year = now.getFullYear()
+        const month = String(now.getMonth() + 1).padStart(2, '0') // Months are zero-based
+        const day = String(now.getDate()).padStart(2, '0')
+        const hours = String(now.getHours()).padStart(2, '0')
+        const minutes = String(now.getMinutes()).padStart(2, '0')
+        return `${year}-${month}-${day}T${hours}:${minutes}`
+      }
+      case 'daily': {
+        const year = now.getFullYear()
+        const month = String(now.getMonth() + 1).padStart(2, '0')
+        const day = String(now.getDate()).padStart(2, '0')
+
+        return `${year}-${month}-${day}`
+      }
+      case 'monthly': {
+        const year = now.getFullYear()
+        const month = String(now.getMonth() + 1).padStart(2, '0')
+
+        return `${year}-${month}`
+      }
+    }
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -236,7 +262,7 @@ export const ParkingSearchForm = ({ unitOfTime }: ParkingSearchFormProps) => {
               </Text>
               <Input
                 type={inputType}
-                placeholder='12:00'
+                min={minDateValue()}
                 {...register('startDate', {
                   required: 'Data startu jest wymagana',
                   onChange: () => handleStartDateChange(),
@@ -259,7 +285,7 @@ export const ParkingSearchForm = ({ unitOfTime }: ParkingSearchFormProps) => {
               </Text>
               <Input
                 type={inputType}
-                placeholder='15:00'
+                min={minDateValue()}
                 {...register('endDate', {
                   required: 'Data końca jest wymagana',
                 })}

@@ -28,9 +28,6 @@ export const ParkingListingItem = ({ data, ...props }: ParkingListingItemProps) 
   const addParkingToComparison = useParkingComparison((state) => state.addParking)
   const removeParkingFromComparison = useParkingComparison((state) => state.removeParking)
   const isCompared = useParkingComparison((state) => state.isParkingAdded)
-  const comparedParkings = useParkingComparison((state) => state.comparedParkings)
-
-  console.log(comparedParkings)
 
   useEffect(() => {
     async function getRating() {

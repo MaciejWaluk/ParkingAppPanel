@@ -207,7 +207,7 @@ export const ParkingReservation = ({ data, ...props }: ParkingReservationProps) 
         .eq('isPrimary', true)
       setValue('name', profile?.name!)
       setValue('spotType', spotType)
-      if (vehicle) {
+      if (vehicle && vehicle.length > 0) {
         setValue('fuel', vehicle[0].fuel)
         setValue('registerNumber', vehicle[0].registerNumber)
         setValue('type', vehicle[0].type)
@@ -217,7 +217,6 @@ export const ParkingReservation = ({ data, ...props }: ParkingReservationProps) 
         setValue('endDate', endDate)
       }
     }
-
     setData()
   }, [])
   return (
